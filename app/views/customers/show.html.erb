@@ -1,45 +1,71 @@
-<h1>Customer Information</h1>
-<ul>
-	<li><%= @customer.name %></li>
-	<li><%= @customer.email %></li>
-	<li><%= @customer.phone %></li>
-</ul>
-<br>
-<% if @customer.ramens.length > 0 %>
-	<p>Bowls: <% @customer.ramens.each do |r| %>
+<div class="container">
+	<h1>Customer Information</h1>
 	<ul>
-		<li>Noodles: <%= r.noodles %></li>
-		<li>Broth: <%= r.broth %></li>
-		<li>Spicy: <%= r.spicy %></li>
-		<% if r.egg %>
-			<li>Egg</li>	
-		<% end %>
-		<% if r.bean_sprouts %>
-			<li>Bean Sprouts</li>
-		<% end %>
-		<% if r.mushrooms %>
-			<li>Mushrooms</li>
-		<% end %>
-		<% if r.broccoli %>
-			<li>Broccoli</li>
-		<% end %>
-		<% if r.corn %>
-			<li>Corn</li>
-		<% end %>
-		<% if r.spicy_miso %>
-			<li>Spicy Miso</li>
-		<% end %>	
-		<% if r.extra_pork %>
-			<li>Extra Pork</li>
-		<% end %>
-		<li><%= link_to "Edit Bowl", edit_customer_ramen_path(@customer, r) %></li>
-		<li><%= link_to "Delete Bowl", [@customer, r], {method: :delete, confirm: "Are you sure you want to delete?"} %></li>		
+		<li><%= @customer.name %></li>
+		<li><%= @customer.email %></li>
+		<li><%= @customer.phone %></li>
 	</ul>
-	<% end %>
-	</p>
-<% else %>
-	<p>Get some Ramen!</p>
-<% end %>
-<%= link_to "New Order", new_customer_ramen_path(@customer) %>
-<%= link_to "Edit Customer", edit_customer_path(@customer) %>
-<%= link_to "Delete Customer", @customer, {method: :delete, confirm: "Are you sure you want to delete?"} %>
+	<br>
+	<% if @customer.ramens.length > 0 %>
+	<div class="row">
+		<p><h2>Orders:</h2> <% @customer.ramens.each do |r| %>
+			<div class="col-xs-4">
+				<ul class="list-group panel panel-success">
+					<li class="list-group-item panel-heading">
+						<div class="panel-title">
+							Noodles: <%= r.noodles %> | Broth: <%= r.broth %> | Spicy: <%= r.spicy %>
+						</div>
+					</li>
+					<li class="list-group-item list-group-item-default" >
+						<blockquote class="blockquote ingredients"><% if r.egg %>Egg<br>	
+							<% end %>
+							<% if r.bean_sprouts %>
+							Bean Sprouts<br>
+							<% end %>
+							<% if r.mushrooms %>
+							Mushrooms<br>
+							<% end %>
+							<% if r.broccoli %>
+							Broccoli<br>
+							<% end %>
+							<% if r.corn %>
+							Corn<br>
+							<% end %>
+							<% if r.spicy_miso %>
+							Spicy Miso<br>
+							<% end %>	
+							<% if r.extra_pork %>
+							Extra Pork<br>
+							<% end %>
+						</blockquote>
+					</li>
+					<div class="btn-group">
+						<% if @customer == current_customer %>
+						<%= link_to "Edit Bowl", edit_customer_ramen_path(@customer, r), class: 'btn btn-primary btn-sm' %>
+						<% end %>
+						<% if @customer == current_customer %>
+						<%= link_to "Delete Bowl", {action: "destroy", id:[@customer, r]}, {method: :delete, data:{confirm: "Are you sure you want to delete?"}, class: 'btn btn-danger btn-sm'} %>
+						<% end %>
+					</div>
+					
+				</ul>
+			</div>
+
+			<% end %>
+		</p>
+		<% else %>
+		<p>Get some Ramen!</p>
+		<% end %>
+	</div>
+	<div class="row">
+		<% if @customer == current_customer %>
+		<%= link_to "New Order", new_customer_ramen_path(@customer), class: 'btn btn-primary' %>
+		<% end %>
+		<% if @customer == current_customer %>
+		<%= link_to "Edit Customer", edit_customer_path(@customer), class: 'btn btn-warning' %>
+		<% end %>
+		<% if @customer == current_customer %>
+		<%= link_to "Delete Customer", {action: "destroy", id:@customer}, {method: :delete, data:{confirm: "Are you sure you want to delete?"}, class: 'btn btn-danger'} %>
+		<% end %>
+	</div>
+</div>

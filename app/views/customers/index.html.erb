@@ -1,14 +1,33 @@
-<h1>Customers</h1>
-	<ul><% @customers.each do |c| %>
-		<li><%= c.name %>
-		</li>
-		<li><%= c.email %>
-		</li>
-		<li><%= c.phone %>
-		</li>
-		<%= link_to "Info", customer_path(c) %>
-		<%= link_to "New Order", new_customer_ramen_path(c) %>
-		<br>
-		<% end %>
-	</ul>
-<%= link_to "Add new customer", new_customer_path%>
+<div class="jumbotron">
+	<h1>Customers</h1>
+	<div class="row">
+		<% @customers.each do |c| %>
+		<div class="col-xs-4">
+			<ul class="list-group panel panel-success">
+				<li class="list-group-item panel-heading">
+					<div class="panel-title">
+						<%= c.name %>
+					</div>
+				</li>
+				<li class="list-group-item list-group-item-default">
+					<blockquote class="blockquote-reverse">
+						<p>Bowls = <%= c.ramens.count %></p>
+					</blockquote>
+				</li>
+				<div class="collapse in" id="<%= c.id %>" >
+					<li class="list-group-item list-group-item-info" >
+						<%= c.email %></li>
+						<li class="list-group-item list-group-item-info" ><%= c.phone %></li>
+					</div>
+					<li class="list-group-item" >
+          <div class="btn-group">
+					<%= link_to "Info", customer_path(c), class: 'btn btn-primary btn-sm' %> 
+					<%= link_to "New Order", new_customer_ramen_path(c), class: 'btn btn-primary btn-sm' %>
+					<button class="btn btn-info btn-sm" data-toggle="collapse" data-target="#<%= c.id %>"> Collapse </button>
+				</div>
+			</li>
+			</ul>
+		</div>
+			<% end %>
+		</div>
+	</div>

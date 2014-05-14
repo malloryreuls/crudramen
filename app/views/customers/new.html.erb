@@ -3,6 +3,7 @@
 		Name: <%= f.text_field :name %>
 		Email: <%= f.text_field :email %>
 		Phone: <%= f.text_field :phone %>
+		Password: <%= f.password_field :password %>
 		<%= f.submit "Add customer" %>
 	<% end %>
 <%= link_to "Back to Customer List", customers_path %>

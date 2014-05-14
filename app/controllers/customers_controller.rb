@@ -12,8 +12,11 @@ class CustomersController < ApplicationController
   def create
     @customer = Customer.new(customer_params)
     if @customer.save
+      flash[:success] = "Sign up successful"
       redirect_to customers_path
-    else render "new"
+    else
+      flash[:danger] = "Sign up failed, try again" 
+      render "new"
     end
   end
 
@@ -42,6 +45,6 @@ private
   end
 
   def customer_params
-    params.require(:customer).permit(:name, :email, :phone)
+    params.require(:customer).permit(:name, :email, :phone, :password)
   end
 end 

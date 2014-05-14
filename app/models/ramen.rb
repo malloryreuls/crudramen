@@ -13,3 +13,4 @@ class Ramen
 
 belongs_to :customer
 end
+  

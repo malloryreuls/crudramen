@@ -1,6 +1,7 @@
 class RamensController < ApplicationController
 
 before_action :set_ramen, only: [:edit, :update, :show, :destroy]
+before_action :authenticate_customer
 
   def index
     @ramens = Ramen.all
@@ -8,7 +9,12 @@ before_action :set_ramen, only: [:edit, :update, :show, :destroy]
 
   def new
     @customer = Customer.find(params[:customer_id])
-    @ramen = Ramen.new
+    if @customer == current_customer
+      @ramen = Ramen.new
+    else
+      flash[:danger] = "You can only add ramen to your own account!"
+      redirect_to customers_path(params[:customer_id])
+    end
   end
 
   def create
@@ -22,6 +28,10 @@ before_action :set_ramen, only: [:edit, :update, :show, :destroy]
 
   def edit
     @customer = Customer.find(params[:customer_id])
+    if @customer != current_customer
+      flash[:danger] = "Edit your own ramens!"
+      redirect_to customers_path(params[:customer_id])
+    end
   end
 
   def show
@@ -36,8 +46,13 @@ before_action :set_ramen, only: [:edit, :update, :show, :destroy]
   end
 
   def destroy
+    if @customer == current_customer
     @ramen.destroy
     redirect_to customer_path(params[:customer_id])
+    else
+      flash[:danger] = "Delete your own ramens!"
+      redirect_to customers_path(params[:customer_id])
+    end
   end
 
 private

@@ -1,5 +1,6 @@
+
 <%= form_for [@customer, @ramen] do |f| %>
-		Noodle:<%= f.select :noodles, [['soft', 'soft'], ['medium', 'medium'], ['hard', 'hard'], ['crunchy?', 'crunchy?']] %>
+		Noodle:<%= f.select :noodles, [['soft', 'soft'], ['medium', 'medium'], ['hard', 'hard'], ['crunchy?', 'crunchy?']], class:'form-control input-lg' %>
 		Broth:<%= f.select :broth, [['light', 'light'], ['medium', 'medium'], ['heavy', 'heavy']] %>
 		Spicy:<%= f.select :spicy, [['mild', 'mild'], ['medium', 'medium'], ['hot', 'hot']] %>
 		<br>

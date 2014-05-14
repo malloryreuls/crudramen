@@ -21,13 +21,16 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li><%= link_to "View Customers", customers_path %></li>
-        <li><%= link_to "New Customer", new_customer_path %></li>
+        <% if @customer == current_customer %>
+        <li><%= link_to "Add New Ramen", new_customer_ramen_path(@customer) %></li>
+        <% end %>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <% if !current_user %>
-          <li><%= link_to "Sign Up", new_user_path %></li>
+        <% if !signed_in? %>
+          <li><%= link_to "Sign Up", new_customer_path %></li>
           <li><%= link_to "Sign In", new_sessions_path %></li>
         <% else %>
+          <li>Hello, <%= current_customer.name %></li>
           <li><%= link_to "Sign Out", sessions_path, :method => :delete %></li>
         <% end %>
       </ul>
